@@ -19,7 +19,7 @@ int main() {
   cv::namedWindow("Camera", cv::WINDOW_AUTOSIZE);
 
   // Variable to hold the frames
-  cv::Mat frame, gray, blurred;
+  cv::Mat frame, gray, blurred, edges;
 
   while (true) {
     // Capture each frame
@@ -34,8 +34,10 @@ int main() {
     // Convert the frame to grayscale
     cv::cvtColor(frame, gray, cv::COLOR_BGR2GRAY);
     cv::GaussianBlur(gray, blurred, cv::Size(11, 11), 0);
+    cv::Canny(blurred, edges, 10, 10);
+
     // Display the grayscale frame
-    cv::imshow("Camera", blurred);
+    cv::imshow("Camera", edges);
 
     // Wait for 1 ms and check if 'q' is pressed to exit
     if (cv::waitKey(1) == 'q') {
