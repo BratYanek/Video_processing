@@ -4,6 +4,7 @@ CMakeFiles/
 CMakeCache.txt
 Makefile
 cmake_install.cmake
+.cache/clangd/index
 
 *.o
 *.a
