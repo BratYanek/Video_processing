@@ -1,8 +1,0 @@
-[
-{
-  "directory": "/home/yanek/projects/facial_recognition/build",
-  "command": "/usr/bin/c++  -isystem /usr/include/opencv4 -std=gnu++11 -o CMakeFiles/camera.dir/camera.o -c /home/yanek/projects/facial_recognition/camera.cpp",
-  "file": "/home/yanek/projects/facial_recognition/camera.cpp",
-  "output": "CMakeFiles/camera.dir/camera.o"
-}
-]

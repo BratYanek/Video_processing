@@ -1,3 +1,0 @@
-/home/yanek/projects/facial_recognition/build/CMakeFiles/camera.dir
-/home/yanek/projects/facial_recognition/build/CMakeFiles/edit_cache.dir
-/home/yanek/projects/facial_recognition/build/CMakeFiles/rebuild_cache.dir
