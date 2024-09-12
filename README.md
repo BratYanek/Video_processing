@@ -20,4 +20,4 @@ The project is currently in progress. The foundational setup for capturing video
     - z visualized as a 25
 
 ## Database
-Currently, there are approximately 150 images per letter in the training database.
+Currently in the stage of gathering screenshots to evaluate how accuracy improves with changes to the database. At this moment 150 screenshots per letter.
