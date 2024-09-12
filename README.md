@@ -13,3 +13,11 @@ The project is currently in progress. The foundational setup for capturing video
 - Real-time video capture using OpenCV.
 - Basic framework for letter recognition.
 - Placeholder for machine learning model integration.
+
+## Progress
+- Recognition of letters:
+    - a visualized as a 0
+    - z visualized as a 25
+
+## Database
+Currently, there are approximately 150 images per letter in the training database.
