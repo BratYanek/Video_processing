@@ -1,6 +1,6 @@
 #include <iostream>
+#include <string>
 
-// comment only for test purpose
 #include <opencv2/core/mat.hpp>
 #include <opencv2/core/types.hpp>
 #include <opencv2/highgui.hpp>
@@ -23,6 +23,9 @@ int main() {
   // Variable to hold the frames
   cv::Mat frame, gray, blurred, edges;
 
+  int imageCounter = 0; // To keep track of saved images
+  char letter;          // To store the letter label
+
   while (true) {
     // Capture each frame
     cap >> frame;
@@ -41,9 +44,22 @@ int main() {
     // Display the grayscale frame
     cv::imshow("Camera", edges);
 
+    char key = cv::waitKey(1);
+
     // Wait for 1 ms and check if 'q' is pressed to exit
-    if (cv::waitKey(1) == 'q') {
+    if (key == 'q') {
       break;
+    }
+
+    if (key >= 'a' && key <= 'z') {
+      letter = key;
+      std::string fileName = "database/letter_" + std::string(1, letter) + "_" +
+                             std::to_string(imageCounter++) + ".jpg";
+
+      // Save the current frame as an image with a label
+      cv::imwrite(fileName, edges);
+
+      std::cout << "Saved image: " << fileName << std::endl;
     }
   }
 
