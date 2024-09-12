@@ -1,11 +1,27 @@
+#include <filesystem>
 #include <iostream>
-#include <string>
-
 #include <opencv2/core/mat.hpp>
 #include <opencv2/core/types.hpp>
 #include <opencv2/highgui.hpp>
 #include <opencv2/imgproc.hpp>
 #include <opencv2/videoio.hpp>
+#include <string>
+
+namespace fs = std::filesystem;
+
+// Function to generate the next unique filename
+std::string getNextFileName(const std::string &baseName) {
+  int counter = 1;
+  std::string fileName = baseName + "_001.jpg";
+
+  while (fs::exists(fileName)) {
+    fileName = baseName + "_" +
+               std::string(3 - std::to_string(counter).length(), '0') +
+               std::to_string(counter++) + ".jpg";
+  }
+
+  return fileName;
+}
 
 int main() {
   // Open the default camera (camera index 0)
@@ -21,10 +37,12 @@ int main() {
   cv::namedWindow("Camera", cv::WINDOW_AUTOSIZE);
 
   // Variable to hold the frames
-  cv::Mat frame, gray, blurred, edges;
+  cv::Mat frame, gray, blurred, edges, resized;
 
-  int imageCounter = 0; // To keep track of saved images
-  char letter;          // To store the letter label
+  char letter; // To store the letter label
+
+  // Desired size for the resized frames
+  cv::Size desiredSize(640, 480);
 
   while (true) {
     // Capture each frame
@@ -36,12 +54,15 @@ int main() {
       break;
     }
 
-    // Convert the frame to grayscale
-    cv::cvtColor(frame, gray, cv::COLOR_BGR2GRAY);
-    cv::GaussianBlur(gray, blurred, cv::Size(11, 11), 0);
-    cv::Canny(blurred, edges, 10, 10);
+    // Resize the frame to the desired size
+    cv::resize(frame, resized, desiredSize);
 
-    // Display the grayscale frame
+    // Convert the frame to grayscale
+    cv::cvtColor(resized, gray, cv::COLOR_BGR2GRAY);
+    cv::GaussianBlur(gray, blurred, cv::Size(11, 11), 0);
+    cv::Canny(blurred, edges, 20, 20);
+
+    // Display the processed frame
     cv::imshow("Camera", edges);
 
     char key = cv::waitKey(1);
@@ -53,8 +74,8 @@ int main() {
 
     if (key >= 'a' && key <= 'z') {
       letter = key;
-      std::string fileName = "database/letter_" + std::string(1, letter) + "_" +
-                             std::to_string(imageCounter++) + ".jpg";
+      std::string baseFileName = "database/letter_" + std::string(1, letter);
+      std::string fileName = getNextFileName(baseFileName);
 
       // Save the current frame as an image with a label
       cv::imwrite(fileName, edges);
